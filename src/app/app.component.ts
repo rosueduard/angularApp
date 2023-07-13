@@ -34,14 +34,13 @@ export class AppComponent extends Sprite {
     this.addEventListener(MouseEvent.CLICK, this.onShapeClicked);
   }
 
-  private onEnterFrame = (event: Event) => {
+  private onEnterFrame = ({ target }: Event) => {
     this.shapesOnView.forEach((shape) => {
       // TODO - moves spahes to map in order to remove specific one
       // let it for now
-      if (shape.rectY > 1000) {
+      if (shape.rectY > target.parent.stageHeight) {
         this.shapesOnView.shift();
       }
-
       shape.update();
       this.addChild(shape.instance);
     });
