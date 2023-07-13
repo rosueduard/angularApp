@@ -4,5 +4,5 @@ export type ShapeType = {
   width?: number;
   height?: number;
   color?: number;
-  speed?: number;
+  gravity?: number;
 };

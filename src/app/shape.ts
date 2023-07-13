@@ -9,7 +9,7 @@ export class Shape {
   private width: number;
   private height: number;
   private color: number;
-  private speed: number;
+  private gravity: number;
 
   public instance: Sprite;
   public generatedAt;
@@ -20,7 +20,7 @@ export class Shape {
     this.width = params?.width ?? shapeDefaultValues.width;
     this.height = params?.height ?? shapeDefaultValues.height;
     this.color = params?.color ?? shapeDefaultValues.color;
-    this.speed = params?.speed ?? shapeDefaultValues.speed;
+    this.gravity = params?.gravity ?? shapeDefaultValues.gravity;
 
     this.instance = new Sprite();
     this.generatedAt = Lib.getTimer();
@@ -30,7 +30,7 @@ export class Shape {
     this.instance.graphics.clear()
     this.instance.graphics.beginFill(this.color);
 
-    this.rectY += this.speed;
+    this.rectY += this.gravity;
     this.instance.graphics.drawRect(this.rectX, this.rectY, this.width, this.height);
   }
 }

@@ -1,9 +1,5 @@
 import { Component } from "@angular/core";
 import Sprite from "openfl/lib/openfl/display/Sprite";
-import Graphics from "openfl/lib/openfl/display/Graphics";
-import Stage from "openfl/lib/openfl/display/Stage";
-
-import Lib from "openfl/lib/openfl/Lib";
 import Event from "openfl/lib/openfl/events/Event";
 
 import { Shape } from "./shape";
@@ -32,16 +28,18 @@ export class AppComponent extends Sprite {
     setInterval(() => {
       const params: ShapeType = {
         rectX: Math.floor(Math.random() * 500),
+		// gravity: Math.floor(Math.random() * 5)
       };
       const newShape = new Shape(params);
       this.shapesOnView.push(newShape);
-    }, this.shapesPerSecond * 1000);
+    }, this.shapesPerSecond * 1000);``
   }
 
   private onEnterFrame = (event: Event) => {
     this.shapesOnView.forEach((shape) => {
-      // TODO -
-      if (shape.rectY > 400) {
+      // TODO - moves spahes to map in order to remove specific one
+	  // let it for now
+      if (shape.rectY > 1000) {
         this.shapesOnView.shift();
       }
 
@@ -50,6 +48,3 @@ export class AppComponent extends Sprite {
     });
   };
 }
-
-var stage = new Stage(650, 400, 0xffffff, AppComponent);
-document.body.appendChild(stage.element);

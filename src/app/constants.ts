@@ -4,5 +4,5 @@ export const shapeDefaultValues = {
   width: 100,
   height: 100,
   color: 0x24afc4,
-  speed: 2,
+  gravity: 2,
 };
