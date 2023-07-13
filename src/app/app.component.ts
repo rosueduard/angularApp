@@ -13,7 +13,7 @@ import { ShapeType } from "./shape.type";
 })
 export class AppComponent extends Sprite {
   private shapesPerSecond = 1;
-  public shapesOnView = [];
+  private shapesOnView: Map <String , Shape> = new Map();
 
   public constructor() {
     super();
@@ -22,24 +22,22 @@ export class AppComponent extends Sprite {
     this.addEvents();
   }
 
-  private initGame() {
+  private initGame(): void {
     const shape = new Shape();
-    this.shapesOnView.push(shape);
+    this.shapesOnView.set(shape.instance.name, shape);
 
     this.addShapes();
   }
 
-  private addEvents() {
+  private addEvents(): void {
     this.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
     this.addEventListener(MouseEvent.CLICK, this.onShapeClicked);
   }
 
   private onEnterFrame = ({ target }: Event) => {
-    this.shapesOnView.forEach((shape) => {
-      // TODO - moves spahes to map in order to remove specific one
-      // let it for now
-      if (shape.rectY > target.parent.stageHeight) {
-        this.shapesOnView.shift();
+    this.shapesOnView.forEach((shape) => {      
+      if (shape.getRectY > target.parent.stageHeight) {
+        this.shapesOnView.delete(shape.instance.name);
       }
       shape.update();
       this.addChild(shape.instance);
@@ -47,22 +45,19 @@ export class AppComponent extends Sprite {
   };
 
   private onShapeClicked = ({ target }: TouchEvent) => {
-    const shapeClickedName = target["__name"];
-    this.shapesOnView = this.shapesOnView.filter((shape) => {
-      if (shape.instance.name !== shapeClickedName) return true;
-
-      shape.removeShape();
-      return false;
-    });
+    const shapeClicked = target["__name"];
+    this.shapesOnView.get(shapeClicked).removeShape();
+    this.shapesOnView.delete(shapeClicked);
   };
 
-  private addShapes() {
+  private addShapes(): void {
     setInterval(() => {
       const params: ShapeType = {
         rectX: Math.floor(Math.random() * 500),
+        gravity: Math.floor(Math.random() * 5)
       };
       const newShape = new Shape(params);
-      this.shapesOnView.push(newShape);
+      this.shapesOnView.set(newShape.instance.name, newShape);
     }, this.shapesPerSecond * 1000);
   }
 }

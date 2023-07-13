@@ -27,6 +27,10 @@ export class Shape {
     this.instance.name = `ShapeNumber: ${Lib.getTimer()}`;
   }
 
+  get getRectY(): number {
+    return this.rectY;
+  }
+
   public update() {
     this.instance.graphics.clear();
     this.instance.graphics.beginFill(this.color);
