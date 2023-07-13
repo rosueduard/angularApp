@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import Sprite from "openfl/lib/openfl/display/Sprite";
 import Event from "openfl/lib/openfl/events/Event";
+import MouseEvent from "openfl/lib/openfl/events/MouseEvent";
 
 import { Shape } from "./shape";
 import { ShapeType } from "./shape.type";
@@ -18,7 +19,9 @@ export class AppComponent extends Sprite {
     super();
 
     this.initGame();
+
     this.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
+    this.addEventListener(MouseEvent.CLICK, this.onShapeClicked);
   }
 
   private initGame() {
@@ -28,23 +31,32 @@ export class AppComponent extends Sprite {
     setInterval(() => {
       const params: ShapeType = {
         rectX: Math.floor(Math.random() * 500),
-		// gravity: Math.floor(Math.random() * 5)
       };
       const newShape = new Shape(params);
       this.shapesOnView.push(newShape);
-    }, this.shapesPerSecond * 1000);``
+    }, this.shapesPerSecond * 1000);
   }
 
   private onEnterFrame = (event: Event) => {
     this.shapesOnView.forEach((shape) => {
       // TODO - moves spahes to map in order to remove specific one
-	  // let it for now
+      // let it for now
       if (shape.rectY > 1000) {
         this.shapesOnView.shift();
       }
 
       shape.update();
       this.addChild(shape.instance);
+    });
+  };
+
+  private onShapeClicked = ({ target }: TouchEvent) => {
+    const shapeClickedName = target["__name"];
+    this.shapesOnView = this.shapesOnView.filter((shape) => {
+      if (shape.instance.name !== shapeClickedName) return true;
+
+	  shape.removeShape();
+	  return false;
     });
   };
 }

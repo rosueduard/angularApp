@@ -24,13 +24,18 @@ export class Shape {
 
     this.instance = new Sprite();
     this.generatedAt = Lib.getTimer();
+    this.instance.name = `ShapeNumber: ${Lib.getTimer()}`;
   }
 
   public update() {
-    this.instance.graphics.clear()
+    this.instance.graphics.clear();
     this.instance.graphics.beginFill(this.color);
 
     this.rectY += this.gravity;
     this.instance.graphics.drawRect(this.rectX, this.rectY, this.width, this.height);
+  }
+
+  public removeShape() {
+    this.instance.graphics.clear();
   }
 }
