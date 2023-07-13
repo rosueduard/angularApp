@@ -19,22 +19,19 @@ export class AppComponent extends Sprite {
     super();
 
     this.initGame();
-
-    this.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
-    this.addEventListener(MouseEvent.CLICK, this.onShapeClicked);
+    this.addEvents();
   }
 
   private initGame() {
     const shape = new Shape();
     this.shapesOnView.push(shape);
 
-    setInterval(() => {
-      const params: ShapeType = {
-        rectX: Math.floor(Math.random() * 500),
-      };
-      const newShape = new Shape(params);
-      this.shapesOnView.push(newShape);
-    }, this.shapesPerSecond * 1000);
+    this.addShapes();
+  }
+
+  private addEvents() {
+    this.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
+    this.addEventListener(MouseEvent.CLICK, this.onShapeClicked);
   }
 
   private onEnterFrame = (event: Event) => {
@@ -55,8 +52,18 @@ export class AppComponent extends Sprite {
     this.shapesOnView = this.shapesOnView.filter((shape) => {
       if (shape.instance.name !== shapeClickedName) return true;
 
-	  shape.removeShape();
-	  return false;
+      shape.removeShape();
+      return false;
     });
   };
+
+  private addShapes() {
+    setInterval(() => {
+      const params: ShapeType = {
+        rectX: Math.floor(Math.random() * 500),
+      };
+      const newShape = new Shape(params);
+      this.shapesOnView.push(newShape);
+    }, this.shapesPerSecond * 1000);
+  }
 }
