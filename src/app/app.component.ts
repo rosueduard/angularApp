@@ -19,14 +19,22 @@ export class AppComponent extends Sprite {
     super();
 
     this.initGame();
-    this.addEvents();
   }
 
   private initGame(): void {
-    const shape = new Shape();
-    this.shapesOnView.set(shape.instance.name, shape);
-
     this.addShapes();
+    this.addEvents();
+  }
+
+  private addShapes(): void {
+    setInterval(() => {
+      const params  = {
+        rectX: Math.floor(Math.random() * 500),
+      };
+      const shape = new Shape(params);
+      this.shapesOnView.set(shape.instance.name, shape);
+      this.addChild(shape.instance);
+    }, this.shapesPerSecond * 1000);
   }
 
   private addEvents(): void {
@@ -49,15 +57,4 @@ export class AppComponent extends Sprite {
     this.shapesOnView.get(shapeClicked).removeShape();
     this.shapesOnView.delete(shapeClicked);
   };
-
-  private addShapes(): void {
-    setInterval(() => {
-      const params: ShapeType = {
-        rectX: Math.floor(Math.random() * 500),
-        gravity: Math.floor(Math.random() * 5)
-      };
-      const newShape = new Shape(params);
-      this.shapesOnView.set(newShape.instance.name, newShape);
-    }, this.shapesPerSecond * 1000);
-  }
 }
