@@ -1,8 +1,7 @@
 import Sprite from "openfl/lib/openfl/display/Sprite";
 import Lib from "openfl/lib/openfl/Lib";
 import Graphics from "openfl/lib/openfl/display/Graphics";
-import { shapeDefaultValues } from "../constants";
-import { ShapeType } from "./shapes.enum";
+import { ShapeType, ShapeDefaultValues } from "."
 
 export class Shape {
   private rectX: number;
@@ -17,15 +16,15 @@ export class Shape {
   public instance: Sprite;
   public generatedAt;
 
-  constructor(params?) {
-    this.rectX = params?.rectX ?? shapeDefaultValues.rectX;
-    this.rectY = params?.rectY ?? shapeDefaultValues.rectY;
-    this.width = params?.width ?? shapeDefaultValues.width;
-    this.height = params?.height ?? shapeDefaultValues.height;
-    this.color = params?.color ?? shapeDefaultValues.color;
-    this.gravity = params?.gravity ?? shapeDefaultValues.gravity;
+  constructor(params?) {    
+    this.rectX = params?.rectX ?? ShapeDefaultValues.rectX;
+    this.rectY = params?.rectY ?? ShapeDefaultValues.rectY;
+    this.width = params?.width ?? ShapeDefaultValues.width;
+    this.height = params?.height ?? ShapeDefaultValues.height;
+    this.color = params?.color ?? ShapeDefaultValues.color;
+    this.type = params?.type ?? ShapeDefaultValues.type;
+    this.gravity = params?.gravity ?? ShapeDefaultValues.gravity;
 
-    this.type = this.getRandomShapeType()
     this.instance = new Sprite();
     this.instance.name = `ShapeNumber: ${Lib.getTimer()}`;
   }
@@ -78,12 +77,6 @@ export class Shape {
         -Math.sin(start + step * i) * radius + y
       );
     }
-  }
-
-  private getRandomShapeType = () => {
-    const values = Object.values(ShapeType).filter((e) => typeof e === 'string');
-    const enumKey = values[Math.floor(Math.random() * values.length)];
-    return ShapeType[enumKey];
   }
 
   public removeShape() {

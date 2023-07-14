@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import Sprite from "openfl/lib/openfl/display/Sprite";
 import Event from "openfl/lib/openfl/events/Event";
 import MouseEvent from "openfl/lib/openfl/events/MouseEvent";
-import { Shape } from "./shape/shape";
+import { Shape, ShapeType, ShapeColor } from "./shape/index";
 
 @Component({
   selector: "app-root",
@@ -28,6 +28,8 @@ export class AppComponent extends Sprite {
     setInterval(() => {
       const params  = {
         rectX: Math.floor(Math.random() * 500),
+        type: this.getRandomFromEnum(ShapeType),
+        color: this.getRandomFromEnum(ShapeColor),
       };
       const shape = new Shape(params);
       this.shapesOnView.set(shape.instance.name, shape);
@@ -55,4 +57,10 @@ export class AppComponent extends Sprite {
     this.shapesOnView.get(shapeClicked).removeShape();
     this.shapesOnView.delete(shapeClicked);
   };
+
+  private getRandomFromEnum = (en) => {
+    const keys = Object.keys(en).filter((e) => typeof e === 'string');
+    const enumVal = keys[Math.floor(Math.random() * keys.length)]
+    return en[enumVal];
+  }
 }
