@@ -2,9 +2,7 @@ import { Component } from "@angular/core";
 import Sprite from "openfl/lib/openfl/display/Sprite";
 import Event from "openfl/lib/openfl/events/Event";
 import MouseEvent from "openfl/lib/openfl/events/MouseEvent";
-
-import { Shape } from "./shape";
-import { ShapeType } from "./shape.type";
+import { Shape } from "./shape/shape";
 
 @Component({
   selector: "app-root",

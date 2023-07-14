@@ -1,9 +1,8 @@
 import Sprite from "openfl/lib/openfl/display/Sprite";
 import Lib from "openfl/lib/openfl/Lib";
-// import { ShapeType } from "./shape.type";
-import { ShapeType } from "./shapes.enum";
-import { shapeDefaultValues } from "./constants";
 import Graphics from "openfl/lib/openfl/display/Graphics";
+import { shapeDefaultValues } from "../constants";
+import { ShapeType } from "./shapes.enum";
 
 export class Shape {
   private rectX: number;
